@@ -38,7 +38,7 @@ task_manager_api/
 
 ### 1. Clone the repository
 
-git clone <your-github-repository-url>
+git clone https://github.com/manojkarthikreddyporeddy7-alt/task_manager_api.git
 
 ### 2. Open the project
 
