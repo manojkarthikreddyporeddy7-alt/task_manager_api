@@ -1,6 +1,6 @@
 # Task Manager REST API
 
-A RESTful Task Manager API built using Flask, Flask-RESTful, SQLite, and JWT authentication.
+A production-ready RESTful Task Manager API built using Flask, Flask-RESTful, SQLite, JWT authentication, and Docker.
 
 ## Features
 
@@ -16,23 +16,39 @@ A RESTful Task Manager API built using Flask, Flask-RESTful, SQLite, and JWT aut
 - Input validation
 - JSON responses
 - Proper HTTP status codes
+- Docker support
+- Pinned dependencies
+- Postman API testing
 
 ## Technologies Used
 
-- Python
+- Python 3.14
 - Flask
 - Flask-RESTful
 - Flask-JWT-Extended
 - SQLite
+- Docker
 - Postman
+- Git
+- GitHub
 
 ## Project Structure
 
 task_manager_api/
+
 ├── app.py
+
 ├── database.py
+
+├── Dockerfile
+
+├── requirements.txt
+
 ├── .gitignore
-└── README.md
+
+├── README.md
+
+└── Task_Manager_API.postman_collection.json
 
 ## Installation
 
@@ -56,7 +72,7 @@ Windows PowerShell:
 
 ### 5. Install dependencies
 
-pip install Flask Flask-RESTful Flask-JWT-Extended
+pip install -r requirements.txt
 
 ### 6. Run the application
 
@@ -114,11 +130,13 @@ Authorization: Bearer <access_token>
 
 POST /tasks
 
+Requires a valid JWT token.
+
 Example request:
 
 {
     "title": "Learn REST API",
-    "description": "Complete Week 3 Task Manager project"
+    "description": "Complete Task Manager project"
 }
 
 ## Get All Tasks
@@ -126,6 +144,8 @@ Example request:
 GET /tasks
 
 Requires a valid JWT token.
+
+The API returns tasks belonging to the authenticated user.
 
 ## Get Single Task
 
@@ -137,11 +157,13 @@ Requires a valid JWT token.
 
 PUT /tasks/2
 
+Requires a valid JWT token.
+
 Example request:
 
 {
     "title": "Learn REST API",
-    "description": "Complete Week 3 Task Manager project",
+    "description": "Complete Task Manager project",
     "completed": true
 }
 
@@ -165,6 +187,7 @@ The API validates:
 - Invalid completed value
 - Invalid username or password
 - Non-existing tasks
+- Unauthorized task access
 
 ## User Ownership
 
@@ -188,9 +211,59 @@ The database is automatically created when the application starts.
 
 The local database file is excluded from Git using .gitignore.
 
+## Docker
+
+The project includes a Dockerfile for running the API inside a Docker container.
+
+### Build Docker Image
+
+docker build -t task-manager-api .
+
+### Run Docker Container
+
+docker run --name task-manager-container -p 5000:5000 task-manager-api
+
+The API will run at:
+
+http://127.0.0.1:5000
+
+### Stop Docker Container
+
+docker stop task-manager-container
+
+### Remove Docker Container
+
+docker rm task-manager-container
+
+### Docker Verification
+
+The Dockerized API was tested successfully.
+
+The following endpoint was verified:
+
+GET http://127.0.0.1:5000/
+
+Expected response:
+
+{
+    "message": "Task Manager API is running"
+}
+
+## Requirements
+
+The project dependencies are stored in:
+
+requirements.txt
+
+Install all dependencies using:
+
+pip install -r requirements.txt
+
+The dependencies are pinned to specific versions for consistent installation.
+
 ## Testing
 
-The API was tested using Postman.
+The API was tested using Postman and Docker.
 
 The Postman collection contains:
 
@@ -210,6 +283,8 @@ The Postman collection contains:
 - Protected task endpoints require JWT authentication.
 - Users can only access their own tasks.
 - Invalid input is rejected with appropriate HTTP status codes.
+- Authentication failures return appropriate HTTP status codes.
+- JWT secrets should be stored using environment variables in production.
 
 ## HTTP Status Codes
 
@@ -222,6 +297,25 @@ The Postman collection contains:
 | 404 | Resource not found |
 | 409 | Username already exists |
 
+## Clean Checkout
+
+The project can be run from a clean GitHub checkout.
+
+Steps:
+
+1. Clone the repository.
+2. Create a virtual environment.
+3. Install dependencies using requirements.txt.
+4. Run the Flask application.
+
+The project can also be run using Docker:
+
+docker build -t task-manager-api .
+
+docker run --name task-manager-container -p 5000:5000 task-manager-api
+
 ## Author
 
-Task Manager REST API - Week 3 Project
+POREDDY MANOJ KARTHIK REDDY
+
+Task Manager REST API - Week 4 Production-Ready Build
